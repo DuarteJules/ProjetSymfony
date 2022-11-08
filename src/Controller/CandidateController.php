@@ -16,10 +16,17 @@ class CandidateController extends AbstractController
 {
 
     #[Route(path: 'candidate/me', name: 'profile')]
-    public function CandidateProfile(): Response
+    public function CandidateProfile(ManagerRegistry $managerRegistry): Response
     {
-        return $this->renderForm('candidate/profile.html.twig');
+        $candidates = $managerRegistry->getRepository(Candidate::class)->findAll();
+        $skill = $managerRegistry->getRepository(Skill::class)->findAll();
+
+        return $this->renderForm('candidate/profile.html.twig',[
+        'candidates' => $candidates,
+            'skills' => $skill,
+        ]);
     }
+
 
     #[Route(path: '/candidate')]
     public function new(Request $request, ManagerRegistry $managerRegistry): Response

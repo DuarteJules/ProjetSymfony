@@ -1,3 +1,18 @@
 <h1>Page de Profile</h1>
 
+
+<ul>
+    {% for candidate in candidates %}
+        <li>Nom : {{ candidate.name }}</li>
+    {% endfor %}
+</ul>
+
+<select>
+
+    {% for skill in skills %}
+            <option value="none" selected disabled hidden>Select a skill</option>
+            <option>{{ skill.name}}</option>
+    {% endfor %}
+</select>
+
 <button>Ajouter un skill</button>
