@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Hello CompanyController!{% endblock %}
+
+
+{% block body %}
+
+    <ul>
+        {% for company in companies %}
+        <li>
+            <a href="{{ path('edit_company', {id: company.id}) }}"> {{ company.name }} </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}
