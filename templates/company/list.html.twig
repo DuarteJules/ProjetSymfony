@@ -8,7 +8,9 @@
 
     <ul>
         {% for company in companies %}
-        <li> {{ company.name }}</li>
+        <li>
+            <a href="{{ path('edit_company', {id: company.id}) }}"> {{ company.name }} </a>
+        </li>
         {% endfor %}
     </ul>
 

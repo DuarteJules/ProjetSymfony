@@ -9,6 +9,7 @@
     </div>
     {{ form_widget(form.save,{'attr': {'class': 'btn btn-primary'}}) }}
 
+    <a href="{{ path('del_company', {id: company.id}) }}">Supprimer la company</a>
     {{ form_end(form) }}
 {% endblock %}
 
