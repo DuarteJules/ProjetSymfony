@@ -12,6 +12,7 @@ class CandidateType extends AbstractType {
     {
         $builder
             ->add('name', TextType::class)
+            ->add('email', TextType::class)
             ->add('save', SubmitType::class)
         ;
     }

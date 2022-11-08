@@ -18,6 +18,9 @@ class Candidate
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
+
     #[ORM\OneToMany(mappedBy: 'candidate', targetEntity: Candidature::class)]
     private Collection $candidatures;
 
@@ -43,6 +46,18 @@ class Candidate
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }
