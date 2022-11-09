@@ -24,7 +24,7 @@ class Candidate
     #[ORM\OneToMany(mappedBy: 'candidate', targetEntity: Candidature::class)]
     private Collection $candidatures;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'candidates')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'candidates')]
     private Collection $skills;
 
     public function __construct()

@@ -32,12 +32,14 @@ class CandidateController extends AbstractController
     public function new(Request $request, ManagerRegistry $managerRegistry): Response
     {
         $candidate = new Candidate();
+        $skill = $managerRegistry->getRepository(Skill::class)->findAll();
+
 
         $form = $this->createForm(CandidateType::class, $candidate);
-
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $objectManager = $managerRegistry->getManager();
+            $candidate = $form->getData();
             $objectManager->persist($candidate);
             $objectManager->flush();
             return $this->redirectToRoute('profile');
@@ -45,6 +47,7 @@ class CandidateController extends AbstractController
 
         return $this->renderForm('candidate/new.html.twig', [
             'form' => $form,
+            'skills' => $skill,
         ]);
     }
 }

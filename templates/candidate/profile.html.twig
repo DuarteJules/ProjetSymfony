@@ -1,18 +1,13 @@
-<h1>Page de Profile</h1>
+{% extends 'base.html.twig' %}
 
 
-<ul>
-    {% for candidate in candidates %}
-        <li>Nom : {{ candidate.name }}</li>
-    {% endfor %}
-</ul>
 
-<select>
+{% block body %}
+    <h2>Liste de candidates </h2>
+    <ul>
+        {% for candidate in candidates %}
+            <li>Nom : {{ candidate.name }} <br> Email : {{ candidate.email }}</li>
+        {% endfor %}
+    </ul>
 
-    {% for skill in skills %}
-            <option value="none" selected disabled hidden>Select a skill</option>
-            <option>{{ skill.name}}</option>
-    {% endfor %}
-</select>
-
-<button>Ajouter un skill</button>
+{% endblock %}

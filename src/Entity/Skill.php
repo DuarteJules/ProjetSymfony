@@ -18,7 +18,7 @@ class Skill
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Candidate::class, inversedBy: 'skills')]
+    #[ORM\ManyToMany(targetEntity: Candidate::class, mappedBy: 'skills')]
     private Collection $candidates;
 
     #[ORM\ManyToMany(targetEntity: Job::class, inversedBy: 'skills')]
