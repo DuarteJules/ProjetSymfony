@@ -18,13 +18,13 @@ class Job
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(targetEntity: Company::class,inversedBy: 'jobs')]
+    #[ORM\ManyToOne(targetEntity: Company::class, inversedBy: 'jobs')]
     private ?Company $company = null;
 
     #[ORM\OneToMany(mappedBy: 'job', targetEntity: Candidature::class)]
     private Collection $candidatures;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, mappedBy: 'jobs')]
+    #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'jobs')]
     private Collection $skills;
 
     public function __construct()
