@@ -19,10 +19,10 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 class JobController extends AbstractController
 {
     #[Route('/', name: 'job_list')]
-    public function JobList(ManagerRegistry $doctrine): Response
+    public function JobList(JobRepository $jobRepository): Response
     {
         //get all jobs
-        $job = $doctrine->getRepository(Job::class)->findAll();
+        $job = $jobRepository->findAll();
 
         //render the job list
         return $this->render('job/list.html.twig', [
@@ -31,11 +31,10 @@ class JobController extends AbstractController
     }
 
     #[Route('/job/new', name: 'new_job')]
-    public function NewJob(Request $request, ManagerRegistry $doctrine): Response
+    public function NewJob(Request $request, JobRepository $jobRepository): Response
     {
         //create a new Job object
         $job = new Job();
-        $entityManager = $doctrine->getManager();
 
         //create a new form for the new Job object
         $form = $this->createFormBuilder($job)
@@ -60,9 +59,8 @@ class JobController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //get data from the form
             $job = $form->getData();
-            $entityManager->persist($job);
             //save them to the db
-            $entityManager->flush();
+            $jobRepository->save($job,true);
 
             //redirect to the Job list to see the newly added Job
             return $this->redirectToRoute('job_list');
@@ -116,17 +114,13 @@ class JobController extends AbstractController
     }
 
     #[Route('/job/del/{id}', name: 'del_job')]
-    public function SuppJob($id, ManagerRegistry $doctrine): Response
+    public function SuppJob($id, JobRepository $jobRepository): Response
     {
         //get the job to delete
-        $job = $doctrine->getRepository(Job::class)->find($id);
-        $entityManager = $doctrine->getManager();
+        $job = $jobRepository->find($id);
 
         //delete it
-        $entityManager->remove($job);
-
-        //save changes
-        $entityManager->flush();
+        $jobRepository->remove($job, true);
 
         //render the job list
         return $this->redirectToRoute('job_list');

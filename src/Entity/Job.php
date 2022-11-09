@@ -24,8 +24,7 @@ class Job
     #[ORM\OneToMany(mappedBy: 'job', targetEntity: Candidature::class)]
     private Collection $candidatures;
 
-    #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'jobs',fetch: 'EAGER')]
-//    #[ORM\JoinTable(name: 'job_skill', joinColumns: [ORM\JoinColumn::class => ['name'=>'job_id', 'referencedColumnName'=>'id']])]
+    #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'jobs', fetch: 'EAGER')]
     private Collection $skills;
 
     public function __construct()
