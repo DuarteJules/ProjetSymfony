@@ -4,7 +4,7 @@
 {% block title %}Hello CompanyController!{% endblock %}
 {% block nav %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Coding Recrute</a>
+        <a class="navbar-brand" href="/">Coding Recrute</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,7 +32,7 @@
     <ul>
         {% for job in jobs %}
             <li>
-                <a href="{{ path('edit_job', {id: job.id}) }}"> {{ job.name }} </a>
+                <a href="{{ path('details_job', {id: job.id}) }}"> {{ job.name }} </a>
             </li>
         {% endfor %}
     </ul>
