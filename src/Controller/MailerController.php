@@ -13,12 +13,8 @@ class MailerController extends AbstractController
     public function sendEmail(MailerInterface $mailer,string $id): Response
     {
         $email = (new Email())
-            ->from('candidature@gmail.com')
-            ->to('davidroquain03@gmail.com')
-            //->cc('cc@example.com')
-            //->bcc('bcc@example.com')
-            //->replyTo('fabien@example.com')
-            //->priority(Email::PRIORITY_HIGH)
+            ->from('CodingRecrute@gmail.com')
+            ->to('GustaveauDeVache@gmail.com')
             ->subject('Réponse à candidature')
             ->text("Vous avez été retenu pour l'offre");
 
