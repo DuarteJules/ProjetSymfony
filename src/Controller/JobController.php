@@ -6,7 +6,8 @@ use App\Entity\Company;
 use App\Entity\Job;
 use App\Entity\Skill;
 use App\Repository\JobRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Array_;
+use phpDocumentor\Reflection\Types\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -131,11 +132,19 @@ class JobController extends AbstractController
     {
         //get the job and his skills
         $job = $jobRepository->find($id);
+        $company = $job->getCompany();
         $skills = $job->getSkills();
-
+        $candidatures = $job->getCandidatures();
+        $candidates = array();
+        foreach($candidatures as $i => $item) {
+            array_push($candidates,$item->getCandidate()->getName());
+        }
         return $this->render('job/details.html.twig', [
             'job' => $job,
-            'skills' => $skills
+            'skills' => $skills,
+            'candidatures' => $candidatures,
+            'candidates' => $candidates,
+            'company' => $company
         ]);
     }
 }
