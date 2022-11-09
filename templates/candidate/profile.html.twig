@@ -12,8 +12,6 @@
             </li>
         {% endfor %}
     </ul>
-    <a href="{{ path('edit_candidate', {id: candidate.id}) }}" class="card-link">Ajouter un skill</a>
-    <a href="{{ path('edit_candidate', {id: candidate.id}) }}" class="card-link">Modifier un skill</a>
-    <a href="{{ path('edit_candidate', {id: candidate.id}) }}" class="card-link">Supprimer un skill</a>
+    <a href="{{ path('candidate_skills_add_edit_remove', {id: candidate.id}) }}" class="card-link">Add / Modify / Delete Skills</a>
 
 {% endblock %}

@@ -5,9 +5,10 @@
     <ul>
         {% for candidate in candidates %}
         <li class="p-2">
-            <a href="{{ path('candidate_details', {id: candidate.id}) }}"> {{ candidate.name }}</a>
-            <a class="btn btn-primary" href="{{ path('edit_candidate', {id: candidate.id}) }}">Edit Candidate</a>
-            <a class="btn btn-primary" href="{{ path('delete_candidate', {id: candidate.id}) }}">Delete Candidate</a>
+            {{ candidate.name }}
+            <a class="btn btn-primary" href="{{ path('candidate_details', {id: candidate.id}) }}">Profile</a>
+            <a class="btn btn-primary" href="{{ path('edit_candidate', {id: candidate.id}) }}">Edit Profile</a>
+            <a class="btn btn-primary" href="{{ path('delete_candidate', {id: candidate.id}) }}">Delete Profile</a>
             <br>
         </li>
         {% endfor %}

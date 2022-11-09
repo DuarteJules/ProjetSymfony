@@ -6,6 +6,7 @@ use App\Entity\Candidate;
 use App\Entity\Skill;
 use App\Form\Type\CandidateType;
 use App\Repository\CandidateRepository;
+use App\Repository\JobRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -79,7 +80,6 @@ class CandidateController extends AbstractController
             ->add('skills', EntityType::class,
                 ['class' => Skill::class,
                     'choice_label' => 'name',
-                    'choice_value' => 'id',
                     'multiple' => true,
                     'expanded' => true,
                 ])
@@ -114,5 +114,36 @@ class CandidateController extends AbstractController
         return $this->redirectToRoute('candidate_list');
     }
 
+    #[Route('/candidate/skills/edit/{id}', name: 'candidate_skills_add_edit_remove')]
+    public function AddEditDeleteSkillsCandidate(Request $request, ManagerRegistry $doctrine, $id): Response
+    {
+        $candidate = $doctrine->getRepository(Candidate::class)->find($id);
+        $skills = $doctrine->getRepository(Skill::class)->findAll();
+        $entityManager = $doctrine->getManager();
 
+        $form = $this->createFormBuilder($candidate)
+            ->add('name', TextType::class)
+            ->add('skills', EntityType::class,
+                ['class' => Skill::class,
+                    'choice_label' => 'name',
+                    'multiple' => true,
+                    'expanded' => true,
+                ])
+            ->add('save', SubmitType::class, ['label' => 'Add / Edit / Delete Skills'])
+            ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $candidate = $form->getData();
+            $entityManager->persist($candidate);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('candidate_list');
+        }
+
+        return $this->renderForm('candidate/skills/addmodifydelete.html.twig', [
+            'form' => $form,
+            'skills' => $skills,
+        ]);
+    }
 }
