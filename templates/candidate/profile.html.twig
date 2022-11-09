@@ -1,13 +1,19 @@
 {% extends 'base.html.twig' %}
 
 
-
 {% block body %}
-    <h2>Liste de candidates </h2>
+    <h1>Page de Profile</h1>
+    <h2> Profile name : {{ candidate.name }}</h2>
+    <p>Skills : </p>
     <ul>
-        {% for candidate in candidates %}
-            <li>Nom : {{ candidate.name }} <br> Email : {{ candidate.email }}</li>
+        {% for skill in skills %}
+            <li>
+                {{ skill.name }}
+            </li>
         {% endfor %}
     </ul>
+    <a href="{{ path('edit_candidate', {id: candidate.id}) }}" class="card-link">Ajouter un skill</a>
+    <a href="{{ path('edit_candidate', {id: candidate.id}) }}" class="card-link">Modifier un skill</a>
+    <a href="{{ path('edit_candidate', {id: candidate.id}) }}" class="card-link">Supprimer un skill</a>
 
 {% endblock %}
