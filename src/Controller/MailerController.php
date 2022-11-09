@@ -9,12 +9,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MailerController extends AbstractController
 {
-    #[Route('/email/{id}' , name: 'mailer_show')]
-    public function sendEmail(MailerInterface $mailer,string $id): Response
+    #[Route('/email/{mail}' , name: 'mailer_show')]
+    public function sendEmail(MailerInterface $mailer,string $mail): Response
     {
         $email = (new Email())
             ->from('CodingRecrute@gmail.com')
-            ->to('GustaveauDeVache@gmail.com')
+            ->to($mail)
             ->subject('Réponse à candidature')
             ->text("Vous avez été retenu pour l'offre");
 
