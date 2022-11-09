@@ -19,23 +19,23 @@
         <div class="body-div">
             {% block nav %}
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <a class="navbar-brand" href="/">Coding Recrute</a>
+                    <a class="navbar-brand" href="/company">Coding Recrute</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item active">
-                                <a class="nav-link" href="{{ path('company_list') }}"><span class="sr-only">Company</span></a>
+                                <a class="nav-link" href="{{ path('company_list') }}"><span class="sr-only">Company List</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('job_list') }}">Job</a>
+                                <a class="nav-link" href="/company">Job List</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Candidate</a>
+                                <a class="nav-link" href="{{ path('candidate_list') }}">Candidate List</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link " href="#">Skill</a>
+                                <a class="nav-link " href="{{ path('list_skills') }}">Skill List</a>
                             </li>
                         </ul>
                     </div>

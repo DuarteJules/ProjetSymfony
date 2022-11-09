@@ -23,7 +23,7 @@ class SkillController extends AbstractController
     }
 
 
-    #[Route(path: '/skills')]
+    #[Route(path: '/skills', name: 'new_skills')]
     public function new(Request $request, ManagerRegistry $managerRegistry): Response
     {
         $skill = new Skill();

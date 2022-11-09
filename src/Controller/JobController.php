@@ -18,7 +18,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class JobController extends AbstractController
 {
-    #[Route('/', name: 'job_list')]
+    #[Route('/job/list', name: 'job_list')]
     public function JobList(JobRepository $jobRepository): Response
     {
         //get all jobs
