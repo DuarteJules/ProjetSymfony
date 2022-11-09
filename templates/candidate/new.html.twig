@@ -1,0 +1,10 @@
+{# templates/skill/new.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Candidates Form</h1>
+    {{ form(form)}}
+    <a class="btn btn-primary" href="{{ path('candidate_list') }}">List Candidat</a>
+    <p>Listing users already exist</p>
+
+{% endblock %}

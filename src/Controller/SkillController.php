@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SkillController extends AbstractController
 {
     #[Route(path: 'skills/list', name: 'list_skills')]
-    public function SkillList(Request $request, ManagerRegistry $managerRegistry): Response
+    public function SkillList(ManagerRegistry $managerRegistry): Response
     {
         $skill = $managerRegistry->getRepository(Skill::class)->findAll();
         return $this->renderForm('skill/list.html.twig', [

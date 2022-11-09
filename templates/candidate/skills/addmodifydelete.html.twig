@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    {{ form_start(form) }}
+
+    <h1>{{ form_widget(form.name,{'attr': {'class': 'form-control'}}) }}</h1>
+
+    <div class="form-group" style="margin-bottom: 1rem">
+        {{ form_label(form.skills) }}
+        {{ form_widget(form.skills,{'attr': {'class': 'form-control'}}) }}
+    </div>
+    {{ form_widget(form.save,{'attr': {'class': 'btn btn-primary'}}) }}
+
+    {{ form_end(form) }}
+{% endblock %}
