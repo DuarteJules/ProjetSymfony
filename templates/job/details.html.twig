@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Details{% endblock %}
+
+{% block body %}
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{ job.name }}</h5>
+            <p class="card-text">Skills : </p>
+            <ul>
+                {% for skill in skills %}
+                    <li>
+                        {{ skill.name }}
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="{{ path('edit_job', {id: job.id}) }}" class="card-link">Modifier</a>
+        </div>
+    </div>
+{% endblock %}
+
+
+

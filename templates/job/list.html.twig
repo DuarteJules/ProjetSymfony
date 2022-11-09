@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Job List{% endblock %}
+
+
+{% block body %}
+
+    <ul>
+        {% for job in jobs %}
+            <li>
+                <a href="{{ path('details_job', {id: job.id}) }}"> {{ job.name }} </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <input type="button" onclick="location.href='{{ path('new_job') }}';" value="Ajouter un Job" class="btn btn-primary"/>
+
+
+{% endblock %}
