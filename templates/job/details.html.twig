@@ -14,7 +14,16 @@
                     </li>
                 {% endfor %}
             </ul>
+            <p class="card-text">Candidatures : </p>
+            <ul>
+                {% for candidature in candidatures %}
+                    <li>
+                        <span>{{ candidature.candidate.name }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
             <a href="{{ path('edit_job', {id: job.id}) }}" class="card-link">Modifier</a>
+            <a href="{{ path('new_candidature', {id: job.id}) }}" class="card-link">Postuler</a>
         </div>
     </div>
 {% endblock %}
