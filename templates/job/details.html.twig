@@ -6,6 +6,7 @@
     <div class="card" style="width: 18rem;">
         <div class="card-body">
             <h5 class="card-title">{{ job.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Company : {{ company.name }}</h6>
             <p class="card-text">Skills : </p>
             <ul>
                 {% for skill in skills %}
@@ -18,7 +19,8 @@
             <ul>
                 {% for candidature in candidatures %}
                     <li>
-                        <span>{{ candidature.candidate.name }}</span>
+                       <a href="{{ path('details_candidature',{id: candidature.id}) }}"><span>Nom du candidat : {{ candidates[loop.index-1] }}</span></a>
+                        <span>   Statut : {{ candidature.name }}</span>
                     </li>
                 {% endfor %}
             </ul>

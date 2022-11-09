@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Nom du candidat : {{ candidate.name }}</h5>
+            <p class="card-text">Skills du candidat: </p>
+            <ul>
+                {% for skill in candidateSkills %}
+                    <li>
+                        {{ skill.name }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Nom de l'offre : {{ job.name }}</h5>
+            <p class="card-text">Skills requis: </p>
+            <ul>
+                {% for skill in jobSkills %}
+                    <li>
+                        {{ skill.name }}
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="{{ path('validate_candidature', {id: candidature.id}) }}" class="card-link">Valider</a>
+            <a href="{{ path('refuse_candidature', {id: candidature.id}) }}" class="card-link">Refuser</a>
+        </div>
+    </div>
+{% endblock %}
+
+
+
