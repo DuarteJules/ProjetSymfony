@@ -58,6 +58,20 @@ class CandidateController extends AbstractController
         ]);
     }
 
+    #[Route('/candidate/notmatch/{id}', name: 'candidate_notmatch')]
+    public function JobListNotMatch(CandidateRepository $candidateRepository, CandidatureRepository $candidatureRepository,JobRepository $jobRepository, int $id): Response
+    {
+        //get all jobs
+        $candidat = $candidateRepository->find($id);
+        $candidatureWait = $candidatureRepository->findBy(array("candidate" => $candidat));
+
+        //render the job list
+        return $this->render('candidate/wait.html.twig', [
+            'candidat' => $candidat,
+            'candidatureWaits' => $candidatureWait,
+        ]);
+    }
+
 
     #[Route(path: '/candidate', name: 'new_candidate')]
     public function new(Request $request, ManagerRegistry $managerRegistry): Response

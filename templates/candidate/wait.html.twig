@@ -10,7 +10,7 @@
         <ul class="list-group">
             {% for candidatureWait in candidatureWaits %}
 
-                     <a href="{{ path('details_job', {id: candidatureWait.job.id}) }}"> <li class="list-group-item">{{ candidatureWait.job.name }} </li></a>
+                     <a href="{{ path('details_job', {id: candidatureWait.id}) }}"> <li class="list-group-item">{{ candidatureWait.job.name }} </li></a>
 
             {% endfor %}
         </ul>
