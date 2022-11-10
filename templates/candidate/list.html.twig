@@ -6,15 +6,21 @@
         <h2>Liste de candidates </h2>
         <ul class="list-group">
             {% for candidate in candidates %}
-                <li class="p-2 list-group-item">
+                <li class="p-2 list-group-item list-group-item list-group-item-action">
                     {{ candidate.name }}
                     <a class="btn btn-primary" href="{{ path('candidate_details', {id: candidate.id}) }}">Profile</a>
-                    <a class="btn btn-primary" href="{{ path('edit_candidate', {id: candidate.id}) }}">Edit Profile</a>
-                    <a class="btn btn-primary" href="{{ path('delete_candidate', {id: candidate.id}) }}">Delete Profile</a>
+                    <a class="btn btn-warning" href="{{ path('edit_candidate', {id: candidate.id}) }}">Edit Profile</a>
+                    <a class="btn btn-danger" href="{{ path('delete_candidate', {id: candidate.id}) }}">Delete Profile</a>
                     <br>
                 </li>
             {% endfor %}
         </ul>
+
+        <div class="p-3">
+
+            <a class="btn btn-light" href="{{ path('new_candidate') }}">Create New Candidate</a>
+
+        </div>
 
     </div>
 
