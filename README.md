@@ -1,4 +1,4 @@
-text in ".." are command line
+text in "..." are command line
 
 Required installation : 
 "composer install".
@@ -17,3 +17,4 @@ for push the change "php bin/console make:migration"
 
 then "php bin/console doctrine:migrations:migrate"
 
+migrate actual BDD on BDD test"symfony console doctrine:migrations:migrate -n --env=test"
