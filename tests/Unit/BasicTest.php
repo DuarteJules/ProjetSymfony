@@ -7,7 +7,6 @@ use App\Entity\Company;
 use App\Entity\Job;
 use App\Entity\Skill;
 use App\Service\MatchingService;
-use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class BasicTest extends KernelTestCase
@@ -28,36 +27,10 @@ class BasicTest extends KernelTestCase
     {
         $this->assertTrue(true);
 //1 create a company
-        $company = new Company();
-        $company->setName('apple');
-        //2 create 2 jobs for this company
-        $job = new Job();
-        $job->setName('offer one');
-        $job->setCompany($company);
-        $skill = new Skill();
-        $skill->setName("git");
-        $skill2 = new Skill();
-        $skill2->setName("PHP");
-        $skill3 = new Skill();
-        $skill3->setName("JS");
-        $job->addSkill($skill);
-        $job->addSkill($skill2);
-        $job->addSkill($skill3);
 
-        $job2 = new Job();
+        $result = $this->matchingService->foundMatching(0);
 
-        //3 create a candidate with skills
-        $candidate = new Candidate();
-        $candidate->setName('foub');
-        $CanSkill = new Skill();
-        $CanSkill->setName('git');
-        $candidate->addSkill($CanSkill);
-        //4 run the matcher service
-        //- recuperer le service MatcherService
-
-        $result = $this->matchingService->foundMatching([$job, $job2]);
-
-        self::assertEquals($result[0], $job);
+        self::assertEquals($result);
         //$results = $matchingService->match($jobs, $candidates);
         // assert que le resultat contient bien le jobX pour le candidat Y
         // verifier le résultat

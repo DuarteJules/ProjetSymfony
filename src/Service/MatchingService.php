@@ -20,30 +20,36 @@ class MatchingService
     }
 
     public function foundMatching(
-        $id,
+        int $id,
     ): array
     {
-        $count = 0;
-        $offersArray = [];
+        $jobsArray = [];
         #get all job offer
-        $offers = $this->jobRepository->findAll();
-
+        $jobs = $this->jobRepository->findAll();
 
         #get the candidate's skills
         $candidate = $this->candidateRepository->find($id);
-        $candidateSkills[] = $candidate->getSkills();
+        $candidateSkills = $candidate->getSkills();
 
-        foreach ($offers as $offer) {
+        foreach ($jobs as $job) {
+            $commonSkill=0;
             {
-                if ($candidateSkills != $offer->getSkills()) {
-                }elseif ($count>=2){
-                    $offersArray[] = $offer;
-                } else {
-                    $count = $count+1;
+                foreach ($job->getSkills() as $skillJob) {
+
+                    foreach ($candidateSkills as $skillC) {
+
+                        if ($skillJob != $skillC) {
+
+                        }elseif ($commonSkill >= 2){
+                            $jobsArray[] = $job;
+                        }else{
+                            $commonSkill = $commonSkill+1;
+                        }
+                    }
                 }
             }
         }
-        return $offersArray;
+        return $jobsArray;
     }
 }
         #compare offers.skill and candidate.skills
