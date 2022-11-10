@@ -1,8 +1,20 @@
-<h1>List Skills</h1>
+{% extends 'base.html.twig' %}
+
+{% block title %}Skill List{% endblock %}
 
 
-<ul>
-    {% for skill in skills %}
-        <li>{{ skill.name}}</li>
-    {% endfor %}
-</ul>
+
+{% block body %}
+
+        <div class="container p-2">
+                <h1>List Skills</h1>
+
+                <ul class="list-group">
+                        {% for skill in skills %}
+                                <li class="list-group-item">{{ skill.name}}</li>
+                        {% endfor %}
+                </ul>
+        </div>
+
+
+{% endblock %}

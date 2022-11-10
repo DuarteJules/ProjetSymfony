@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container p-2">
+
+        <h2>Liste de candidates </h2>
+        <ul class="list-group">
+            {% for candidate in candidates %}
+                <li class="p-2 list-group-item">
+                    {{ candidate.name }}
+                    <a class="btn btn-primary" href="{{ path('candidate_details', {id: candidate.id}) }}">Profile</a>
+                    <a class="btn btn-primary" href="{{ path('edit_candidate', {id: candidate.id}) }}">Edit Profile</a>
+                    <a class="btn btn-primary" href="{{ path('delete_candidate', {id: candidate.id}) }}">Delete Profile</a>
+                    <br>
+                </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+
+{% endblock %}
