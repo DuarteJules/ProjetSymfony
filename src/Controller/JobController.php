@@ -156,19 +156,19 @@ class JobController extends AbstractController
         ]);
     }
 
-    #[Route('/matching', name: 'job_matching')]
-    public function Matching(Request $request, CandidatureRepository $candidatureRepository, $id = 0)
+    #[Route('/matching/{id}', name: 'job_matching')]
+    public function Matching(Request $request, JobRepository $jobRepository, $id = 0)
     {
-        $candidatures = $candidatureRepository->findAll();
+        $Jobs = $jobRepository->findAll();
         $encoders = [new XmlEncoder(), new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
         $serializer = new Serializer($normalizers, $encoders);
         $jsonData = array();
         $idx = 0;
-        foreach($candidatures as $candidature) {
+        foreach($Jobs as $job) {
             $temp = array(
-                'name' => $candidature->getName(),
-                'id' => $candidature->getId(),
+                'name' => $job->getName(),
+                'id' => $job->getId(),
             );
             $jsonData[$idx++] = $temp;
         }
