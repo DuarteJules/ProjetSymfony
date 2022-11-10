@@ -2,26 +2,35 @@
 
 namespace App\Service;
 
+use App\Entity\Job;
 use App\Repository\CandidateRepository;
 use App\Repository\JobRepository;
 
 class MatchingService
 {
+    private $jobRepository;
+    private $candidateRepository;
+
+    public function __construct(
+        JobRepository $jobRepository,
+        CandidateRepository $candidateRepository
+    ){
+        $this->jobRepository = $jobRepository;
+        $this->candidateRepository=$candidateRepository;
+    }
 
     public function foundMatching(
         $id,
-        JobRepository $jobRepository,
-        CandidateRepository $candidateRepository,
     ): array
     {
         $count = 0;
         $offersArray = [];
         #get all job offer
-        $offers = $jobRepository->findAll();
+        $offers = $this->jobRepository->findAll();
 
 
         #get the candidate's skills
-        $candidate = $candidateRepository->find($id);
+        $candidate = $this->candidateRepository->find($id);
         $candidateSkills[] = $candidate->getSkills();
 
         foreach ($offers as $offer) {

@@ -2,18 +2,16 @@
 
 namespace App\Controller;
 
-    use App\Repository\CandidateRepository;
-    use App\Repository\JobRepository;
+
     use App\Service\MatchingService;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     class MatchingController extends AbstractController{
         #[Route('/matching/{$id}', name: '')]
 
-        public function matching($id, MatchingService $matchingService, JobRepository $jobRepository,CandidateRepository $candidateRepository,
-        ){
+        public function matching($id, MatchingService $matchingService){
 
-        $matchingService->foundMatching($id, $jobRepository, $candidateRepository);
+        $jobMatching = $matchingService->foundMatching($id);
 
 
         }
