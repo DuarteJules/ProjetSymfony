@@ -7,13 +7,42 @@
 
     <div class="container p-2">
         <h1>Liste des offres</h1>
+        <div class=" d-flex justify-content-between">
+            <select class="form-select w-50" aria-label="Default select example">
+                <option value="0">Veuillez choisir un candidat</option>
+                {% for candidate in candidates %}
+                    <option value="{{ candidate.id }}">{{ candidate.name }}</option>
+                {% endfor %}
+            </select>
+            <input type="button" id="showAll" value="Afficher tout" class="btn btn-primary"/>
+        </div>
+
         <ul class="list-group">
-            {% for job in jobs %}
+{#            {% for job in jobs %}#}
 
-                     <a href="{{ path('details_job', {id: job.id}) }}"> <li class="list-group-item">{{ job.name }} </li></a>
+{#                     <a href="{{ path('details_job', {id: job.id}) }}"> <li class="list-group-item">{{ job.name }} </li></a>#}
 
-            {% endfor %}
+{#            {% endfor %}#}
         </ul>
         <input type="button" onclick="location.href='{{ path('new_job') }}';" value="Ajouter un Job" class="btn btn-primary mt-2"/>
     </div>
+    <script>
+        $(document).ready(function(){
+            $('#showAll').on('click', function(){
+                $.ajax({
+                    url:        '/matching',
+                    type:       'GET',
+                    async:      true,
+                    data:       {id: 0},
+
+                    success: function(data, status) {
+                       console.log(data)
+                    },
+                    error : function(xhr, textStatus, errorThrown) {
+                        alert('Ajax request failed.');
+                    }
+                });
+            })
+        })
+    </script>
 {% endblock %}
