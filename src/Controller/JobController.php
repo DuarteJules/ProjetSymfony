@@ -16,10 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
+use App\Service\MatchingService;
 
 
 class JobController extends AbstractController
@@ -157,7 +154,7 @@ class JobController extends AbstractController
     }
 
     #[Route('/matching/{id}', name: 'job_matching')]
-    public function Matching( JobRepository $jobRepository, $id = 0)
+    public function Matching( JobRepository $jobRepository,MatchingService $matchingService, $id = 0)
     {
         $Jobs = $jobRepository->findAll();
 
@@ -165,6 +162,16 @@ class JobController extends AbstractController
         $idx = 0;
         if($id == 0){
             foreach($Jobs as $job) {
+                $temp = array(
+                    'name' => $job->getName(),
+                    'id' => $job->getId(),
+                );
+                $jsonData[$idx++] = $temp;
+            }
+        }
+        else{
+            $filteredJobs = $matchingService->foundMatching($id);
+            foreach ($filteredJobs as $job){
                 $temp = array(
                     'name' => $job->getName(),
                     'id' => $job->getId(),
