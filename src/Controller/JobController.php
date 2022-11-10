@@ -5,30 +5,35 @@ namespace App\Controller;
 use App\Entity\Company;
 use App\Entity\Job;
 use App\Entity\Skill;
+use App\Repository\CandidateRepository;
+use App\Repository\CandidatureRepository;
 use App\Repository\JobRepository;
-use phpDocumentor\Reflection\Types\Array_;
-use phpDocumentor\Reflection\Types\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Service\MatchingService;
 
 
 class JobController extends AbstractController
 {
-    #[Route('/', name: 'job_list')]
-    public function JobList(JobRepository $jobRepository): Response
+    #[Route('/{id}', name: 'job_list')]
+    public function JobList(JobRepository $jobRepository, CandidateRepository $candidateRepository,Request $request, $id = 0)
     {
+
         //get all jobs
         $job = $jobRepository->findAll();
+        $candidates = $candidateRepository->findAll();
 
-        //render the job list
         return $this->render('job/list.html.twig', [
             'jobs' => $job,
+            'candidates' => $candidates
         ]);
+
     }
 
     #[Route('/job/new', name: 'new_job')]
@@ -146,5 +151,35 @@ class JobController extends AbstractController
             'candidates' => $candidates,
             'company' => $company
         ]);
+    }
+
+    #[Route('/matching/{id}', name: 'job_matching')]
+    public function Matching( JobRepository $jobRepository,MatchingService $matchingService, $id = 0)
+    {
+        $Jobs = $jobRepository->findAll();
+
+        $jsonData = array();
+        $idx = 0;
+        if($id == 0){
+            foreach($Jobs as $job) {
+                $temp = array(
+                    'name' => $job->getName(),
+                    'id' => $job->getId(),
+                );
+                $jsonData[$idx++] = $temp;
+            }
+        }
+        else{
+            $filteredJobs = $matchingService->foundMatching($id);
+            foreach ($filteredJobs as $job){
+                $temp = array(
+                    'name' => $job->getName(),
+                    'id' => $job->getId(),
+                );
+                $jsonData[$idx++] = $temp;
+            }
+        }
+
+        return new JsonResponse($jsonData);
     }
 }

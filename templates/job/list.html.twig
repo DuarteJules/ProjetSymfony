@@ -7,13 +7,75 @@
 
     <div class="container p-2">
         <h1>Liste des offres</h1>
-        <ul class="list-group">
-            {% for job in jobs %}
+        <div class=" d-flex justify-content-between mb-2">
+            <select class="form-select w-50" aria-label="Default select example" id="userSelect">
+                <option value="0">Veuillez choisir un candidat</option>
+                {% for candidate in candidates %}
+                    <option value="{{ candidate.id }}">{{ candidate.name }}</option>
+                {% endfor %}
+            </select>
+            <input type="button" id="showAll" value="Afficher tout" class="btn btn-primary"/>
+        </div>
 
-                     <a href="{{ path('details_job', {id: job.id}) }}"> <li class="list-group-item">{{ job.name }} </li></a>
+        <ul class="list-group" id="jobList">
+{#            {% for job in jobs %}#}
 
-            {% endfor %}
+{#                     <a href="{{ path('details_job', {id: job.id}) }}"> <li class="list-group-item">{{ job.name }} </li></a>#}
+
+{#            {% endfor %}#}
         </ul>
         <input type="button" onclick="location.href='{{ path('new_job') }}';" value="Ajouter un Job" class="btn btn-primary mt-2"/>
     </div>
+    <script>
+        $(document).ready(function(){
+            $('#showAll').on('click', function(){
+                $.ajax({
+                    url:        '/matching/0',
+                    type:       'GET',
+                    async:      true,
+
+                    success: function(data, status) {
+                       $('#jobList').html('')
+                        for(i = 0; i < data.length; i++) {
+                            job = data[i];
+                            var id = job['id']
+                            var link = "job/details/" + id
+                            var e = $('<a id="lien" href="' + link +'"><li class="list-group-item" id="name"></li></a>');
+
+                            $('#name', e).html(job['name']);
+                            $('#jobList').append(e);
+                        }
+                    },
+                    error : function(xhr, textStatus, errorThrown) {
+                        alert('Ajax request failed.');
+                    }
+                });
+            })
+
+            $('#userSelect').on('change', function(){
+                var userId = $('#userSelect').val()
+                $.ajax({
+                    url:        '/matching/' + userId,
+                    type:       'GET',
+                    async:      true,
+
+                    success: function(data, status) {
+                        $('#jobList').html('')
+                        for(i = 0; i < data.length; i++) {
+                            job = data[i];
+                            var id = job['id']
+                            var link = "job/details/" + id
+                            var e = $('<a id="lien" href="' + link +'"><li class="list-group-item" id="name"></li></a>');
+
+                            $('#name', e).html(job['name']);
+                            $('#jobList').append(e);
+                        }
+                    },
+                    error : function(xhr, textStatus, errorThrown) {
+                        alert('Ajax request failed.');
+                    }
+                });
+            })
+        })
+    </script>
 {% endblock %}
