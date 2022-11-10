@@ -29,14 +29,5 @@ class BasicTest extends KernelTestCase
 //1 create a company
 
         $result = $this->matchingService->foundMatching(0);
-
-        self::assertEquals($result);
-        //$results = $matchingService->match($jobs, $candidates);
-        // assert que le resultat contient bien le jobX pour le candidat Y
-        // verifier le résultat
-
-        #new candidat/ new offre
-
-        # appel service matching
     }
 }

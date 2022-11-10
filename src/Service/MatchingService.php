@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Entity\Job;
 use App\Repository\CandidateRepository;
 use App\Repository\JobRepository;
 
