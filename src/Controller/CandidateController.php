@@ -6,6 +6,7 @@ use App\Entity\Candidate;
 use App\Entity\Skill;
 use App\Form\Type\CandidateType;
 use App\Repository\CandidateRepository;
+use App\Repository\CandidatureRepository;
 use App\Repository\JobRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -40,6 +41,57 @@ class CandidateController extends AbstractController
         return $this->render('candidate/profile.html.twig', [
             'candidate' => $candidate,
             'skills' => $skills
+        ]);
+    }
+
+    #[Route('/candidate/candidature/{id}', name: 'candidate_candidature')]
+    public function JobListWait(CandidateRepository $candidateRepository, CandidatureRepository $candidatureRepository,JobRepository $jobRepository, int $id): Response
+    {
+        //get all jobs
+        $candidat = $candidateRepository->find($id);
+        $candidatureWait = $candidatureRepository->findBy(array("candidate" => $candidat));
+
+        //render the job list
+        return $this->render('candidate/wait.html.twig', [
+            'candidat' => $candidat,
+            'candidatureWaits' => $candidatureWait,
+        ]);
+    }
+
+    #[Route('/candidate/notmatch/{id}', name: 'candidate_notmatch')]
+    public function JobListNotMatch(CandidateRepository $candidateRepository, JobRepository $jobRepository, int $id): Response
+    {
+        $counter = 0;
+        $verifMatch = 0;
+        $candidat = $candidateRepository->find($id);
+        $skills = $candidat->getSkills();
+        $jobs = $jobRepository->findAll();
+        $jobsNotMatch[0] = $jobs[0];
+        foreach ($jobs as $job)
+
+        {
+            $verifMatch = 0;
+            foreach ($job->getSkills() as $skilljob)
+            {
+                foreach ($skills as $skill)
+                {
+                    if ($skilljob == $skill)
+                    {
+                        $verifMatch++;
+                    }
+                }
+            }
+            if ($verifMatch < 2)
+            {
+                $jobsNotMatch[$counter] = $job;
+                $counter++;
+            }
+        }
+
+        //render the job list
+        return $this->render('candidate/notmatch.html.twig', [
+            'candidat' => $candidat,
+            'jobsNotMatch' => $jobsNotMatch,
         ]);
     }
 

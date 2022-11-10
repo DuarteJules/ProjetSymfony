@@ -1,4 +1,6 @@
 controllers:
     resource: ../src/Controller
     type: attribute
-
+blog_list:
+    path: /email/{id}
+    controller: App\Controller\BlogController::show

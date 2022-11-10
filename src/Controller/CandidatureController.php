@@ -12,6 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CandidatureController extends AbstractController
@@ -83,6 +85,7 @@ class CandidatureController extends AbstractController
     public function Validate(ManagerRegistry $doctrine, $id, CandidatureRepository $candidatureRepository) : Response
     {
         $candidature = $doctrine->getRepository(Candidature::class)->find($id);
+        $candidate = $doctrine->getRepository(Candidate::class)->find($candidature->getCandidate()->getId());
         $job = $candidature->getJob();
         foreach ($job->getCandidatures() as $i => $item){
             if($item->getId() == $candidature->getId()){
@@ -94,7 +97,7 @@ class CandidatureController extends AbstractController
                 $candidatureRepository->save($item,true);
             }
         }
-        return $this->redirectToRoute('details_job',['id' => $job->getId()]);
+        return $this->redirectToRoute('mailer_show',['id' => $candidature->getId(),'idCandidate' => $candidate ->getId()]);
     }
 
     #[Route('/candidature/refuse/{id}', name: 'refuse_candidature')]
