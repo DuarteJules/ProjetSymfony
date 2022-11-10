@@ -59,16 +59,39 @@ class CandidateController extends AbstractController
     }
 
     #[Route('/candidate/notmatch/{id}', name: 'candidate_notmatch')]
-    public function JobListNotMatch(CandidateRepository $candidateRepository, CandidatureRepository $candidatureRepository,JobRepository $jobRepository, int $id): Response
+    public function JobListNotMatch(CandidateRepository $candidateRepository, JobRepository $jobRepository, int $id): Response
     {
-        //get all jobs
+        $counter = 0;
+        $verifMatch = 0;
         $candidat = $candidateRepository->find($id);
-        $candidatureWait = $candidatureRepository->findBy(array("candidate" => $candidat));
+        $skills = $candidat->getSkills();
+        $jobs = $jobRepository->findAll();
+        $jobsNotMatch[0] = $jobs[0];
+        foreach ($jobs as $job)
+
+        {
+            $verifMatch = 0;
+            foreach ($job->getSkills() as $skilljob)
+            {
+                foreach ($skills as $skill)
+                {
+                    if ($skilljob == $skill)
+                    {
+                        $verifMatch++;
+                    }
+                }
+            }
+            if ($verifMatch < 2)
+            {
+                $jobsNotMatch[$counter] = $job;
+                $counter++;
+            }
+        }
 
         //render the job list
-        return $this->render('candidate/wait.html.twig', [
+        return $this->render('candidate/notmatch.html.twig', [
             'candidat' => $candidat,
-            'candidatureWaits' => $candidatureWait,
+            'jobsNotMatch' => $jobsNotMatch,
         ]);
     }
 
