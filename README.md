@@ -1,4 +1,4 @@
-text in ".." are command line
+text in "..." are command line
 
 Required installation : 
 "composer install".

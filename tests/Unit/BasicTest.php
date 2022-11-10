@@ -36,7 +36,13 @@ class BasicTest extends KernelTestCase
         $job->setCompany($company);
         $skill = new Skill();
         $skill->setName("git");
+        $skill2 = new Skill();
+        $skill2->setName("PHP");
+        $skill3 = new Skill();
+        $skill3->setName("JS");
         $job->addSkill($skill);
+        $job->addSkill($skill2);
+        $job->addSkill($skill3);
 
         $job2 = new Job();
 
@@ -49,7 +55,7 @@ class BasicTest extends KernelTestCase
         //4 run the matcher service
         //- recuperer le service MatcherService
 
-        $result = $this->matchingService->matching([$job, $job2], $candidate);
+        $result = $this->matchingService->foundMatching([$job, $job2]);
 
         self::assertEquals($result[0], $job);
         //$results = $matchingService->match($jobs, $candidates);
