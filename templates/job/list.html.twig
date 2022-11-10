@@ -17,7 +17,7 @@
             <input type="button" id="showAll" value="Afficher tout" class="btn btn-primary"/>
         </div>
 
-        <ul class="list-group">
+        <ul class="list-group" id="jobList">
 {#            {% for job in jobs %}#}
 
 {#                     <a href="{{ path('details_job', {id: job.id}) }}"> <li class="list-group-item">{{ job.name }} </li></a>#}
@@ -30,13 +30,21 @@
         $(document).ready(function(){
             $('#showAll').on('click', function(){
                 $.ajax({
-                    url:        '/matching',
+                    url:        '/matching/0',
                     type:       'GET',
                     async:      true,
-                    data:       {id: 0},
 
                     success: function(data, status) {
-                       console.log(data)
+                       $('#jobList').html('')
+                        for(i = 0; i < data.length; i++) {
+                            job = data[i];
+                            var id = job['id']
+                            var link = "job/details/" + id
+                            var e = $('<a id="lien" href="' + link +'"><li class="list-group-item" id="name"></li></a>');
+
+                            $('#name', e).html(job['name']);
+                            $('#jobList').append(e);
+                        }
                     },
                     error : function(xhr, textStatus, errorThrown) {
                         alert('Ajax request failed.');
