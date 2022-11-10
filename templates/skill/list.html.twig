@@ -11,10 +11,15 @@
 
                 <ul class="list-group">
                         {% for skill in skills %}
-                                <li class="list-group-item">{{ skill.name}}</li>
+                                <li class="p-2 list-group-item list-group-item list-group-item-action">{{ skill.name}}</li>
                         {% endfor %}
                 </ul>
-        </div>
+                <div class="p-3">
 
+                        <a class="btn btn-light" href="{{ path('new_skills') }}">Create New Skill</a>
+                        <p>Create skill to add in Coding Recrute</p>
+
+                </div>
+        </div>
 
 {% endblock %}

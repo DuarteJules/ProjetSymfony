@@ -3,14 +3,19 @@
 {% block body %}
     {{ form_start(form) }}
 
+<div class="container p-2">
+
     <div class="form-group" style="margin-bottom: 1rem">
-        {{ form_label(form.name) }}
-        {{ form_widget(form.name,{'attr': {'class': 'form-control'}}) }}
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name,{'attr': {'class': 'form-control'}}) }}
     </div>
+
     {{ form_widget(form.save,{'attr': {'class': 'btn btn-primary'}}) }}
 
-    <a href="{{ path('del_company', {id: company.id}) }}">Supprimer la company</a>
+    <a class="btn btn-danger" href="{{ path('del_company', {id: company.id}) }}">Supprimer la company</a>
     {{ form_end(form) }}
+
+</div>
 {% endblock %}
 
 

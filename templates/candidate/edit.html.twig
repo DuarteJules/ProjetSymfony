@@ -2,6 +2,7 @@
 
 
 {% block body %}
+    <div class="container p-2">
     {{ form_start(form) }}
 
     <div class="form-group" style="margin-bottom: 1rem">
@@ -19,4 +20,5 @@
     {{ form_widget(form.save,{'attr': {'class': 'btn btn-primary'}}) }}
 
     {{ form_end(form) }}
+    </div>
 {% endblock %}

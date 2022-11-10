@@ -30,7 +30,16 @@
 <div class="container p-2">
 
     <h1>Skills</h1>
-    {{ form(form)}}
+    {{ form_start(form,{'attr': {'class': 'p-2'}}) }}
+
+    <div class="form-group" style="margin-bottom: 1rem">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name,{'attr': {'class': 'form-control'}}) }}
+    </div>
+    {{ form_widget(form.save,{'attr': {'class': 'btn btn-primary'}}) }}
+
+
+    {{ form_end(form) }}
 
     </div>
 
