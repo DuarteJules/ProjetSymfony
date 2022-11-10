@@ -44,7 +44,7 @@ class CandidateController extends AbstractController
     }
 
 
-    #[Route(path: '/candidate')]
+    #[Route(path: '/candidate', name: 'new_candidate')]
     public function new(Request $request, ManagerRegistry $managerRegistry): Response
     {
         $candidate = new Candidate();

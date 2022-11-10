@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Job List{% endblock %}
+
+{% block body %}
+
+    <div class="container p-2">
+        <h1>Liste des offres</h1>
+        <ul class="list-group">
+            {% for job in jobs %}
+
+                     <a href="{{ path('details_job', {id: job.id}) }}"> <li class="list-group-item">{{ job.name }} </li></a>
+
+            {% endfor %}
+        </ul>
+        <input type="button" onclick="location.href='{{ path('new_job') }}';" value="Ajouter un Job" class="btn btn-primary mt-2"/>
+    </div>
+{% endblock %}

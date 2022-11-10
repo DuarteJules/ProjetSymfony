@@ -2,9 +2,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<div class="container p-2">
     <h1>Candidates Form</h1>
     {{ form(form)}}
     <a class="btn btn-primary" href="{{ path('candidate_list') }}">List Candidat</a>
     <p>Listing users already exist</p>
+</div>
 
 {% endblock %}

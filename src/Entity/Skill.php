@@ -21,7 +21,7 @@ class Skill
     #[ORM\ManyToMany(targetEntity: Candidate::class, mappedBy: 'skills')]
     private Collection $candidates;
 
-    #[ORM\ManyToMany(targetEntity: Job::class, inversedBy: 'skills')]
+    #[ORM\ManyToMany(targetEntity: Job::class, mappedBy: 'skills')]
     private Collection $jobs;
 
     public function __construct()
