@@ -8,7 +8,7 @@
     <div class="container p-2">
         <h1>Liste des offres</h1>
         <div class=" d-flex justify-content-between">
-            <select class="form-select w-50" aria-label="Default select example">
+            <select class="form-select w-50" aria-label="Default select example" id="userSelect">
                 <option value="0">Veuillez choisir un candidat</option>
                 {% for candidate in candidates %}
                     <option value="{{ candidate.id }}">{{ candidate.name }}</option>
@@ -36,6 +36,31 @@
 
                     success: function(data, status) {
                        $('#jobList').html('')
+                        for(i = 0; i < data.length; i++) {
+                            job = data[i];
+                            var id = job['id']
+                            var link = "job/details/" + id
+                            var e = $('<a id="lien" href="' + link +'"><li class="list-group-item" id="name"></li></a>');
+
+                            $('#name', e).html(job['name']);
+                            $('#jobList').append(e);
+                        }
+                    },
+                    error : function(xhr, textStatus, errorThrown) {
+                        alert('Ajax request failed.');
+                    }
+                });
+            })
+
+            $('#userSelect').on('change', function(){
+                var userId = $('#userSelect').val()
+                $.ajax({
+                    url:        '/matching/' + userId,
+                    type:       'GET',
+                    async:      true,
+
+                    success: function(data, status) {
+                        $('#jobList').html('')
                         for(i = 0; i < data.length; i++) {
                             job = data[i];
                             var id = job['id']
