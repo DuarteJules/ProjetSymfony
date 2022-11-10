@@ -5,30 +5,38 @@ namespace App\Controller;
 use App\Entity\Company;
 use App\Entity\Job;
 use App\Entity\Skill;
+use App\Repository\CandidateRepository;
+use App\Repository\CandidatureRepository;
 use App\Repository\JobRepository;
-use phpDocumentor\Reflection\Types\Array_;
-use phpDocumentor\Reflection\Types\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 
 class JobController extends AbstractController
 {
-    #[Route('/', name: 'job_list')]
-    public function JobList(JobRepository $jobRepository): Response
+    #[Route('/{id}', name: 'job_list')]
+    public function JobList(JobRepository $jobRepository, CandidateRepository $candidateRepository,Request $request, $id = 0)
     {
+
         //get all jobs
         $job = $jobRepository->findAll();
+        $candidates = $candidateRepository->findAll();
 
-        //render the job list
         return $this->render('job/list.html.twig', [
             'jobs' => $job,
+            'candidates' => $candidates
         ]);
+
     }
 
     #[Route('/job/new', name: 'new_job')]
@@ -146,5 +154,32 @@ class JobController extends AbstractController
             'candidates' => $candidates,
             'company' => $company
         ]);
+    }
+
+    #[Route('/matching', name: 'job_matching')]
+    public function Matching(Request $request, CandidatureRepository $candidatureRepository, $id = 0)
+    {
+        $candidatures = $candidatureRepository->findAll();
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+        $jsonData = array();
+        $idx = 0;
+        foreach($candidatures as $candidature) {
+            $temp = array(
+                'name' => $candidature->getName(),
+                'id' => $candidature->getId(),
+            );
+            $jsonData[$idx++] = $temp;
+        }
+//        if ($request->isXmlHttpRequest()) {
+//            if($id == 0){
+//                $jsonContent = $serializer->serialize($candidates, 'json');
+//                return new JsonResponse($jsonContent);
+//            }
+//
+//        }
+//        $jsonContent = $serializer->serialize($candidates, 'json');
+        return new JsonResponse($jsonData);
     }
 }
